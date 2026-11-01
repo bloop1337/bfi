@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <err.h>
-#include <error.h>
+#include <stdio.h>  // putchar(); printf(); getchar(); fopen(); fclose(); fseek(); ftell(); fread();
+#include <stdlib.h> // malloc(); free(); exit();
+#include <string.h> // strlen();
+#include <err.h>    // err();
 
 static void help_exit();
 static void process(const char* code);
@@ -95,7 +94,9 @@ process(const char* code)
 	}
 }
 
-static char* read_file(const char* file_path) {
+static char*
+read_file(const char* file_path) 
+{
 	size_t size;
 	FILE *f = fopen(file_path, "rb");
 	if (!f) return NULL;
@@ -111,7 +112,9 @@ static char* read_file(const char* file_path) {
 	return buffer;
 }
 
-static void help_exit() {
+static void
+help_exit() 
+{
 	printf("BrainFuck interpreter\n");
 	printf("Usage: bfi <file>\n");
 	exit(1);
