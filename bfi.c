@@ -5,7 +5,7 @@
 #include <error.h>
 
 static void help_exit();
-static void process(const char* code, const char* fname);
+static void process(const char* code);
 static char* read_file(const char* file_path);
 
 int
@@ -16,13 +16,13 @@ main(int argc, char** argv)
 	char* code = read_file(argv[1]);
 	if (code == NULL) err(1, argv[1]);
 
-	process(code, argv[1]);
+	process(code);
 	free(code);
 	return 0;
 }
 
 static void
-interprete_command(unsigned char command, const char* fname, unsigned char* memset, int* current, int* line)
+interprete_command(unsigned char command, unsigned char* memset, int* current, int* line)
 {
 	switch(command) {
 		case '+': 
@@ -51,15 +51,14 @@ interprete_command(unsigned char command, const char* fname, unsigned char* mems
 			break;
 
 		default:
-			error_at_line(0, 0, fname, *line, "Syntax error: unexpected character '%c'", command);
-			exit(1);
+			// ignore 
 			break;
 
 	}
 }
 
 static void
-process(const char* code, const char* fname)
+process(const char* code)
 {
 	int line = 1;
 
@@ -90,7 +89,7 @@ process(const char* code, const char* fname)
 				break;
 			}
 			default:
-				interprete_command(code[i], fname, memset, &current, &line);
+				interprete_command(code[i], memset, &current, &line);
 				break;
 		}
 	}
